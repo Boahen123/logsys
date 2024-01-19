@@ -1,4 +1,4 @@
-// Strings for various texts in the app
+/// Strings for various texts on the `RegisterScreen` and perhaps on other screens in the app
 
 /// `Welcome! Register` header text
 const String registerText = 'Welcome! Register';

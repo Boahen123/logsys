@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "244284427018",
+    "project_id": "logsys-login",
+    "storage_bucket": "logsys-login.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244284427018:android:e40cfb8014b6f6d11188f3",
+        "android_client_info": {
+          "package_name": "com.example.logsys"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqDafiys0Ba3ccoKtyw0jFtZLeSV2uXFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logsys/utils/constants/register_texts.dart';
 import 'package:logsys/views/register/widgets/register_form_widget.dart';
 
 /// The `LoginForm` class is that represents a login form with email and password fields.
@@ -23,9 +24,9 @@ class LoginForm extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const CustomFormField(
-                  icon: Icons.phone, fieldName: 'Phone Number'),
-              SizedBox(height: size.height * 0.05),
-              const CustomFormField(icon: Icons.lock, fieldName: 'Password'),
+                  icon: Icons.phone, fieldName: phoneNumbertext),
+              SizedBox(height: size.height * 0.02),
+              const CustomFormField(icon: Icons.lock, fieldName: passwordtext),
               SizedBox(
                 height: size.height * 0.1,
               ),
