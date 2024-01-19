@@ -5,8 +5,8 @@ import 'widgets/register_form_widget.dart';
 
 /// The SignUpScreen class a sign-up form with a header, form fields,
 /// and a footer with options to log in or sign up with Google.
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
