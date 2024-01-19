@@ -4,7 +4,7 @@
 const String registerImage = 'assets/images/register.svg';
 
 ///  directory to  image  on login screen.
-const String loginImage = 'assets/images/register.svg';
+const String loginImage = 'assets/images/login.svg';
 
 ///  directory to  image  on home screen.
-const String homeImage = 'assets/images/register.svg';
+const String homeImage = 'assets/images/home.svg';
