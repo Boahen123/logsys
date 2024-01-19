@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logsys/views/register/widgets/register_form_widget.dart';
 
 /// The `LoginForm` class is that represents a login form with email and password fields.
 class LoginForm extends StatelessWidget {
@@ -17,27 +19,13 @@ class LoginForm extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: size.height * 0.05),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormField(
-                decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.phone),
-                    labelText: 'Phone Number',
-                    hintText: 'Phone Number',
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3.0),
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(size.width * 0.05)),
-                        gapPadding: 2.0)),
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                keyboardType: TextInputType.visiblePassword,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.lock),
-                  label: Text('Password'),
-                ),
-              ),
+              const CustomFormField(
+                  icon: Icons.phone, fieldName: 'Phone Number'),
+              SizedBox(height: size.height * 0.05),
+              const CustomFormField(icon: Icons.lock, fieldName: 'Password'),
               SizedBox(
                 height: size.height * 0.1,
               ),
@@ -45,6 +33,7 @@ class LoginForm extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
+                    Get.toNamed('/home');
                     if (loginFormKey.currentState!.validate()) {
                       // logic for loggin in
                     }
