@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:logsys/utils/constants/image_strings.dart';
+import 'package:logsys/views/common_widgets/appbar.dart';
 import 'package:logsys/views/common_widgets/form_header.dart';
 import 'package:logsys/views/home/widgets/user_details.dart';
 
@@ -15,17 +17,23 @@ class _HomeScreenState extends State<HomeScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('LogSys')),
+      appBar: customAppBar(),
       body: SingleChildScrollView(
           child: Container(
               padding: EdgeInsets.all(size.width * 0.1),
-              child: const Column(children: [
-                FormHeaderWidget(
-                  image: '',
-                  title: 'Your login app',
-                ),
-                UserDetails()
-              ]))),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const FormHeaderWidget(
+                      image: homeImage,
+                      title: 'LogSys App',
+                    ),
+                    SizedBox(
+                      height: size.height * 0.1,
+                    ),
+                    const UserDetails()
+                  ]))),
     );
   }
 }
