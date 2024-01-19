@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logsys/views/common_widgets/form_footer.dart';
 import 'package:logsys/views/common_widgets/form_header.dart';
 
 import 'widgets/register_form_widget.dart';
@@ -22,6 +23,10 @@ class RegisterScreen extends StatelessWidget {
                         title: 'Your login app',
                       ),
                       RegisterFormWidget(),
+                      FormFooterWidget(
+                          alt: 'Already have an account',
+                          auth: 'Log in',
+                          to: 'login')
                     ])))));
   }
 }

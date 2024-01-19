@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logsys/views/common_widgets/form_footer.dart';
 import 'package:logsys/views/common_widgets/form_header.dart';
 import 'package:logsys/views/login/widgets/login_form.dart';
 
@@ -21,11 +22,17 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   FormHeaderWidget(
                     image: '',
-                    title: 'tLoginTitle',
+                    title: 'Log In',
                   ),
 
                   /// Login Form
                   LoginForm(),
+
+                  /// Login form footer
+                  FormFooterWidget(
+                      alt: "Don't have an account?",
+                      auth: 'Register',
+                      to: 'register')
                 ]),
           ),
         ),
