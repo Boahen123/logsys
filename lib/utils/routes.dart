@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:logsys/views/home/home_screen.dart';
 import 'package:logsys/views/login/login_screen.dart';
 import 'package:logsys/views/register/register_screen.dart';
 
@@ -7,5 +8,5 @@ import 'package:logsys/views/register/register_screen.dart';
 final List<GetPage<dynamic>> appRoutes = [
   GetPage(name: '/login', page: () => const LoginScreen()),
   GetPage(name: '/register', page: () => const RegisterScreen()),
-  // GetPage(name: '/home', page: () => const OTPScreen()),
+  GetPage(name: '/home', page: () => const HomeScreen()),
 ];
