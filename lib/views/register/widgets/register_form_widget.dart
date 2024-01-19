@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logsys/utils/constants/colors.dart';
+import 'package:logsys/utils/constants/register_texts.dart';
 
 /// The `SignUpFormWidget` class displays a form for signing up with fields
 /// for full name, email, phone number, and password.
@@ -30,22 +31,22 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               SizedBox(height: size.height * 0.02),
               const CustomFormField(
                 icon: Icons.person,
-                fieldName: 'Full Name',
+                fieldName: fullNametext,
               ),
               SizedBox(height: size.height * 0.02),
               const CustomFormField(
                 icon: Icons.phone,
-                fieldName: 'Phone number',
+                fieldName: phoneNumbertext,
               ),
               SizedBox(height: size.height * 0.02),
               const CustomFormField(
                 icon: Icons.email,
-                fieldName: 'Email',
+                fieldName: emailtext,
               ),
               SizedBox(height: size.height * 0.02),
               const CustomFormField(
                 icon: Icons.lock,
-                fieldName: 'Password',
+                fieldName: passwordtext,
               ),
               SizedBox(height: size.height * 0.08),
               SizedBox(

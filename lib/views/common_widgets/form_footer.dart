@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logsys/utils/constants/colors.dart';
 
 /// The `FormFooterWidget` class displays a form footer with options for
 /// alternative authentication methods.
@@ -30,8 +31,8 @@ class FormFooterWidget extends StatelessWidget {
               children: [
                 TextSpan(
                   text: auth,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.blue),
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, color: appcolor1),
                 ),
               ],
             ),

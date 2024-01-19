@@ -1,1 +1,0 @@
-// Strings for various texts in the app
