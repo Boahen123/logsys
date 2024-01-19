@@ -28,10 +28,13 @@ class FormHeaderWidget extends StatelessWidget {
       children: [
         SvgPicture.asset(
           image,
-          width: size.width * 0.4,
+          width: size.width * 0.5,
           height: size.height * 0.2,
         ),
-        Text(title, style: Theme.of(context).textTheme.displayMedium),
+        SizedBox(
+          height: size.height * 0.1,
+        ),
+        Text(title, style: Theme.of(context).textTheme.displaySmall),
       ],
     );
   }

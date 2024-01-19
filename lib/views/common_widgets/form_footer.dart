@@ -20,7 +20,7 @@ class FormFooterWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: size.height * 0.05),
+        SizedBox(height: size.height * 0.001),
         TextButton(
           onPressed: () => Get.toNamed('/$to'),
           child: Text.rich(
