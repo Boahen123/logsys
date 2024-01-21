@@ -25,6 +25,7 @@ class _LoginFormState extends State<LoginForm> {
   final LoginController loginController = LoginController.instance;
   final DatabaseController dbController = DatabaseController.instance;
   bool loading = false;
+  bool showPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomFormField(
+                keyboardType: TextInputType.phone,
                 icon: Icons.phone,
                 fieldName: phoneNumbertext,
                 controller: LoginController.instance.phoneController,
@@ -47,12 +49,34 @@ class _LoginFormState extends State<LoginForm> {
                     LoginController.instance.phoneValidator(value),
               ),
               SizedBox(height: size.height * 0.02),
-              CustomFormField(
-                icon: Icons.lock,
-                fieldName: passwordtext,
+              TextFormField(
+                obscureText: showPassword,
+                keyboardType: TextInputType.phone,
                 controller: LoginController.instance.passwordController,
                 validator: (String? value) =>
                     LoginController.instance.passwordValidator(value),
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: showPassword
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                  ),
+                  prefixIcon: const Icon(Icons.lock),
+                  label: const Text(passwordtext),
+                  border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 3.0),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size.width * 0.05)),
+                      gapPadding: 2.0),
+                  fillColor: appcolor2,
+                  focusColor: appcolor1,
+                  filled: true,
+                ),
               ),
               SizedBox(
                 height: size.height * 0.1,

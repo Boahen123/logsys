@@ -18,25 +18,29 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
         appBar: customAppBar(),
         body: SingleChildScrollView(
-            child: Container(
-                padding: EdgeInsets.all(size.width * 0.1),
-                child: GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                  },
-                  child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FormHeaderWidget(
-                          image: registerImage,
-                          title: registerText,
-                        ),
-                        RegisterFormWidget(),
-                        FormFooterWidget(
-                            alt: alreadyHaveAnAcounttext,
-                            auth: ' Log in',
-                            to: 'login')
-                      ]),
-                ))));
+            child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Container(
+              padding: EdgeInsets.all(size.width * 0.1),
+              child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FormHeaderWidget(
+                      image: registerImage,
+                      title: registerText,
+                    ),
+                    RegisterFormWidget(),
+                    FormFooterWidget(
+                        alt: alreadyHaveAnAcounttext,
+                        auth: ' Log in',
+                        to: 'login')
+                  ])),
+        )));
   }
 }

@@ -24,6 +24,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   /// FocusNode for the screen
   late FocusNode focusNode;
   final SignUpController signUpController = SignUpController.instance;
+  bool showPassword = true;
 
   @override
   void initState() {
@@ -60,6 +61,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               ),
               SizedBox(height: size.height * 0.02),
               CustomFormField(
+                keyboardType: TextInputType.phone,
                 icon: Icons.phone,
                 fieldName: phoneNumbertext,
                 controller: signUpController.phone,
@@ -75,12 +77,34 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                     signUpController.emailValidator(value),
               ),
               SizedBox(height: size.height * 0.02),
-              CustomFormField(
-                icon: Icons.lock,
-                fieldName: passwordtext,
-                controller: signUpController.password,
+              TextFormField(
+                obscureText: showPassword,
+                keyboardType: TextInputType.phone,
+                controller: LoginController.instance.passwordController,
                 validator: (String? value) =>
-                    signUpController.passwordValidator(value),
+                    LoginController.instance.passwordValidator(value),
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: showPassword
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                  ),
+                  prefixIcon: const Icon(Icons.lock),
+                  label: const Text(passwordtext),
+                  border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 3.0),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size.width * 0.05)),
+                      gapPadding: 2.0),
+                  fillColor: appcolor2,
+                  focusColor: appcolor1,
+                  filled: true,
+                ),
               ),
               SizedBox(height: size.height * 0.08),
               SizedBox(
@@ -136,9 +160,10 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
 class CustomFormField extends StatelessWidget {
   const CustomFormField({
     super.key,
+    this.focusNode,
+    this.keyboardType,
     required this.icon,
     required this.fieldName,
-    this.focusNode,
     required this.controller,
     required this.validator,
   });
@@ -148,11 +173,13 @@ class CustomFormField extends StatelessWidget {
   final FocusNode? focusNode;
   final TextEditingController controller;
   final String? Function(String?) validator;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return TextFormField(
+      keyboardType: keyboardType,
       controller: controller,
       validator: (String? value) => validator(value),
       decoration: InputDecoration(
