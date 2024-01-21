@@ -1,9 +1,8 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:get/get.dart';
 import 'package:logsys/models/session_model.dart';
-import 'package:logsys/models/signup_controller.dart';
 import 'package:logsys/services/login/session_repo.dart';
 
 class SessionController extends GetxController {
@@ -44,5 +43,30 @@ class SessionController extends GetxController {
     Map<String, dynamic> session = sessionModel.toJson();
 
     await SessionController.instance.createSessioninDb(session);
+  }
+
+  String generateAuthToken(int? userId) {
+    // / Generate a JSON Web Token
+// You can provide the payload as a key-value map or a string
+    final jwt = JWT(
+      // Payload
+      {
+        'id': userId,
+        'exp': DateTime.now()
+            .add(const Duration(minutes: 5))
+            .millisecondsSinceEpoch,
+        'server': {
+          'id': '3e4fc296',
+          'loc': 'euw-2',
+        }
+      },
+      issuer: '', // project github link
+    );
+
+// Sign it (default with HS256 algorithm)
+    final token = jwt.sign(SecretKey('secret'));
+
+    log('Signed token: $token\n');
+    return token;
   }
 }

@@ -2,10 +2,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logsys/models/login_controller.dart';
+import 'package:logsys/models/user_model.dart';
 import 'package:logsys/services/database/database_controller.dart';
 import 'package:logsys/services/sessions/session_controller.dart';
 import 'package:logsys/utils/constants/colors.dart';
-// import 'package:logsys/utils/constants/colors.dart';
 import 'package:logsys/utils/constants/register_texts.dart';
 import 'package:logsys/views/register/widgets/register_form_widget.dart';
 
@@ -76,8 +76,20 @@ class _LoginFormState extends State<LoginForm> {
                         Get.toNamed('/home');
                       }
 
+                      // retrieve the user data to expose userId
+                      UserModel? user = await DatabaseController.instance
+                          .retrieveUserData(
+                              loginController.phoneController.text.trim());
+
+                      // generate auth token
+                      String authToken = SessionController.instance
+                          .generateAuthToken(user?.id);
                       // create user session
-                      // SessionController.instance.createSession();
+                      SessionController.instance.createSession(
+                          user?.id,
+                          authToken,
+                          DateTime.now().add(const Duration(minutes: 5)),
+                          null);
 
                       setState(() {
                         loading = false;
