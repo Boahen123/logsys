@@ -8,6 +8,7 @@ import 'package:logsys/services/database/token_manager.dart';
 import 'package:logsys/services/sessions/session_controller.dart';
 import 'package:logsys/utils/constants/colors.dart';
 import 'package:logsys/utils/constants/register_texts.dart';
+import 'package:logsys/views/common_widgets/snackbar.dart';
 import 'package:logsys/views/register/widgets/register_form_widget.dart';
 
 /// The `LoginForm` class is that represents a login form with email and password fields.
@@ -102,9 +103,8 @@ class _LoginFormState extends State<LoginForm> {
                           'user_id': user?.id ?? 'Default id'
                         });
                       } else {
-                        Get.snackbar(
-                            'Phone number not found', 'Please register',
-                            backgroundColor: appcolor2);
+                        customSnackbar(
+                            'Phone number not found', 'Please register');
                         await Future.delayed(const Duration(seconds: 3), () {
                           Get.toNamed('/register');
                         });
@@ -122,7 +122,6 @@ class _LoginFormState extends State<LoginForm> {
                   child: loading
                       ? CircularProgressIndicator(
                           color: appcolor1,
-                          strokeWidth: 4.0,
                         )
                       : const Text('login'),
                 ),

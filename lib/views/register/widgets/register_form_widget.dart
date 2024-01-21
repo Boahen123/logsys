@@ -2,9 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logsys/models/login_controller.dart';
 import 'package:logsys/models/signup_controller.dart';
+import 'package:logsys/services/database/database_controller.dart';
 import 'package:logsys/utils/constants/colors.dart';
 import 'package:logsys/utils/constants/register_texts.dart';
+import 'package:logsys/views/common_widgets/snackbar.dart';
 
 /// The `SignUpFormWidget` class displays a form for signing up with fields
 /// for full name, email, phone number, and password.
@@ -83,29 +86,42 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (signupFormKey.currentState!.validate()) {
                       signupFormKey.currentState!.save();
-                      // register the user
-                      signUpController.registerUser(
-                          signUpController.email.text,
-                          signUpController.password.text,
-                          signUpController.fullname.text,
-                          signUpController.phone.text,
-                          null);
+
+                      // encrypt the password
+                      String encryptedPassword =
+                          LoginController.instance.encryptPassword(
+                        signUpController.password.text,
+                      );
+                      log('Encrypted password: $encryptedPassword');
+
+                      if (await DatabaseController.instance.checkIfPhoneExists(
+                        signUpController.phone.text.trim(),
+                      )) {
+                        customSnackbar(
+                            'Try again', 'This phone number is taken!');
+                      } else {
+                        // register the user
+                        signUpController.registerUser(
+                            signUpController.email.text,
+                            encryptedPassword,
+                            signUpController.fullname.text,
+                            signUpController.phone.text,
+                            null);
+                        // Clear the form fields
+                        signUpController.email.clear();
+                        signUpController.phone.clear();
+                        signUpController.fullname.clear();
+                        signUpController.password.clear();
+                        Get.toNamed('/login');
+                      }
                       // get the texts from the form fields
                       log('full name: ${signUpController.fullname.text}');
                       log('phone : ${signUpController.phone.text}');
                       log('email: ${signUpController.email.text}');
                       log('password: ${signUpController.password.text}');
-                      Get.toNamed('/login');
-
-                      // Clear the form fields
-                      signUpController.email.clear();
-                      signUpController.phone.clear();
-                      signUpController.fullname.clear();
-                      signUpController.password.clear();
-                      // authentication with phone and password
                     }
                   },
                   child: const Text('Sign Up'),

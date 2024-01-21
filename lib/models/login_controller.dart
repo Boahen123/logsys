@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
@@ -20,4 +22,10 @@ class LoginController extends GetxController {
 
   /// The function initiates phone authentication and navigates to the OTP screen.
   void phoneAuthentication(String phoneNo) {}
+
+  String encryptPassword(String password) {
+    final List<int> bytes = utf8.encode(password);
+    final Digest hash = sha256.convert(bytes);
+    return hash.toString();
+  }
 }
