@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:logsys/firebase_options.dart';
 import 'package:logsys/utils/dependency/dependency_injector.dart';
 import 'package:logsys/utils/routes.dart';
+import 'package:logsys/utils/theme/theme_data.dart';
 import 'package:logsys/views/register/register_screen.dart';
 
 void main() async {
@@ -26,10 +27,7 @@ class MyApp extends StatelessWidget {
       getPages: appRoutes,
       defaultTransition: Transition.fadeIn,
       title: 'LogSys',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: appTheme,
       home: const RegisterScreen(),
     );
   }

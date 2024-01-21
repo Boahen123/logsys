@@ -23,6 +23,7 @@ class TokenManager {
   static Future<void> removeToken() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
-    log('removed token successfully');
+    bool cleared = await prefs.clear();
+    log(cleared ? 'removed token successfully' : 'error removing token');
   }
 }

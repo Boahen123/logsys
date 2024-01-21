@@ -13,31 +13,41 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: customAppBar(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            height: size.height,
-            padding: EdgeInsets.all(size.width * 0.05),
-            child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FormHeaderWidget(
-                    image: loginImage,
-                    title: 'Log In',
-                  ),
+    return GestureDetector(
+      onTap: () {
+        /// Dismiss keyboard on clicking anywhere outside the text fields
+        FocusScopeNode currentFocus = FocusScope.of(context);
 
-                  /// Login Form
-                  LoginForm(),
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: customAppBar(),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              height: size.height,
+              padding: EdgeInsets.all(size.width * 0.05),
+              child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FormHeaderWidget(
+                      image: loginImage,
+                      title: 'Log In',
+                    ),
 
-                  /// Login form footer
-                  FormFooterWidget(
-                      alt: "Don't have an account?",
-                      auth: ' Register',
-                      to: 'register')
-                ]),
+                    /// Login Form
+                    LoginForm(),
+
+                    /// Login form footer
+                    FormFooterWidget(
+                        alt: "Don't have an account?",
+                        auth: ' Register',
+                        to: 'register')
+                  ]),
+            ),
           ),
         ),
       ),

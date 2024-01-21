@@ -109,6 +109,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               SizedBox(height: size.height * 0.08),
               SizedBox(
                 width: double.infinity,
+                height: size.height * 0.06,
                 child: ElevatedButton(
                   onPressed: () async {
                     if (signupFormKey.currentState!.validate()) {
@@ -148,7 +149,10 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                       log('password: ${signUpController.password.text}');
                     }
                   },
-                  child: const Text('Sign Up'),
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(color: appcolor3),
+                  ),
                 ),
               ),
             ],

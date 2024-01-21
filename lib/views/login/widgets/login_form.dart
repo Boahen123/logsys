@@ -145,9 +145,12 @@ class _LoginFormState extends State<LoginForm> {
                   },
                   child: loading
                       ? CircularProgressIndicator(
-                          color: appcolor1,
+                          color: appcolor3,
                         )
-                      : const Text('login'),
+                      : const Text('login',
+                          style: TextStyle(
+                            color: Colors.white,
+                          )),
                 ),
               ),
             ],
