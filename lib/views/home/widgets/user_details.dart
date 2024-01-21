@@ -16,14 +16,26 @@ class _UserDetailsState extends State<UserDetails> {
       children: [
         Row(
           children: [
-            const Text('Name: '),
-            Text(widget.fullname),
+            const Text(
+              'Name: ',
+              style: TextStyle(fontSize: 18),
+            ),
+            Text(
+              widget.fullname,
+              style: const TextStyle(fontSize: 18),
+            ),
           ],
         ),
         Row(
           children: [
-            const Text('Phone Number: '),
-            Text(widget.phone),
+            const Text(
+              'Phone Number: ',
+              style: TextStyle(fontSize: 18),
+            ),
+            Text(
+              widget.phone,
+              style: const TextStyle(fontSize: 18),
+            ),
           ],
         ),
       ],
