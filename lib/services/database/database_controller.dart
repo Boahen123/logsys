@@ -17,25 +17,19 @@ class DatabaseController extends GetxController {
       if (counterDoc.exists) {
         var currentCount = counterDoc.data()!['count'];
 
+        // log(currentCount.toString());
         // Update the counter in the document
-        await counterRef.update({count: currentCount + 1});
+        await counterRef.update({'count': currentCount + 1});
 
         // Use the updated counter as the document ID
         var documentId = currentCount + 1;
+        // log(documentId.runtimeType.toString());
+        user.update('id', (value) => documentId);
         // Add your document with the auto-incremented ID
-        await db
-            .collection('yourCollection')
-            .doc(documentId.toString())
-            .set(user);
-
-        await db
-            .collection('users')
-            .add(user.update('id', (value) => documentId))
-            .then((DocumentReference doc) =>
-                log('DocumentSnapshot added with ID: ${doc.id}'));
+        await db.collection('users').doc(documentId.toString()).set(user);
       }
     } catch (e) {
-      log(e.toString());
+      log('Error: ${e.toString()}');
     }
   }
 }

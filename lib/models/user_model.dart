@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// The `UserModel` class represents a user with properties such as id, fullname, email, hashed password, and
 /// phone, and provides a method to convert the object to a JSON format and vice versa.
 class UserModel {
-  final String? id;
+  final int? id;
   final String fullname;
   final String email;
   final String? phone;

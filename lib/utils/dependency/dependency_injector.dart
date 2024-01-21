@@ -8,6 +8,7 @@ class DependencyInjector {
   /// The function sets up dependencies for the SignUpController and LoginController.
   static setupDependencies() {
     Get.put(LoginController());
+    Get.put(SignUpController());
     Get.put(DatabaseController());
   }
 }

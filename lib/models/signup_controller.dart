@@ -25,7 +25,7 @@ class SignUpController extends GetxController {
 
   ///  `registerUser` creates a new user.
   void registerUser(String email, String password, String fullname,
-      String phone, String? id) async {
+      String phone, int? id) async {
     UserModel userModel = RegistrationRepo.createNewUserModel(
         fullname, phone, email, password, id);
 
