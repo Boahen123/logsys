@@ -64,6 +64,7 @@ class SessionController extends GetxController {
                 .add(const Duration(minutes: 5))
                 .millisecondsSinceEpoch ~/
             1000,
+        'iat': DateTime.now().millisecondsSinceEpoch ~/ 1000,
         'server': {
           'id': '3e4fc296',
           'loc': 'euw-2',
