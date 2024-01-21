@@ -56,7 +56,8 @@ Collection: sessions
         └───widgets
 ```
 
-models - Models such as session model and user models.
+models - Models such as session model and user models. <br/>
+
 services
 
 - database - Database service to interact with the database.
@@ -64,7 +65,7 @@ services
 - register - Register service to handle register related operations.
 - sessions - Sessions service to handle session related operations. <br/>
   utils
-- constants - Constants such as routes, strings, etc.
+- constants - Constants such as app texts and colors etc.
 - dependency - Dependency injection related files.
 - theme - Theme related files. <br/>
   views
