@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class UserDetails extends StatefulWidget {
-  const UserDetails({super.key});
+  const UserDetails({super.key, required this.fullname, required this.phone});
+
+  final String fullname, phone;
 
   @override
   State<UserDetails> createState() => _UserDetailsState();
@@ -10,18 +12,18 @@ class UserDetails extends StatefulWidget {
 class _UserDetailsState extends State<UserDetails> {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         Row(
           children: [
-            Text('Name: '),
-            Text("{User's Name}"),
+            const Text('Name: '),
+            Text(widget.fullname),
           ],
         ),
         Row(
           children: [
-            Text('Phone Number: '),
-            Text("{User's Phone Number}"),
+            const Text('Phone Number: '),
+            Text(widget.phone),
           ],
         ),
       ],

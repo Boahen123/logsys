@@ -1,4 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logsys/models/user_model.dart';
+import 'package:logsys/services/database/database_controller.dart';
 import 'package:logsys/utils/constants/image_strings.dart';
 import 'package:logsys/views/common_widgets/appbar.dart';
 import 'package:logsys/views/common_widgets/form_header.dart';
@@ -12,6 +17,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // Use Get.arguments to access the arguments passed from the previous route
+  Map<String, dynamic>? arguments = Get.arguments;
+  late UserModel? userDetails;
+
+  @override
+  void initState() async {
+    String phone = arguments?['phone'] ?? 'Default Phone';
+    super.initState();
+    userDetails = await DatabaseController.instance.retrieveUserData(phone);
+    log('${userDetails?.fullname}');
+    log('${userDetails?.phone}');
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -32,7 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: size.height * 0.1,
                     ),
-                    const UserDetails()
+                    UserDetails(
+                      fullname: userDetails?.fullname ?? 'Default Name',
+                      phone: userDetails?.phone ?? 'Default Phone',
+                    )
                   ]))),
     );
   }

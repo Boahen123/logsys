@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 /// The `UserModel` class represents a user with properties such as id, fullname, email, hashed password, and
 /// phone, and provides a method to convert the object to a JSON format and vice versa.
 class UserModel {
@@ -34,15 +32,12 @@ class UserModel {
   }
 
   /// Map User object fetched from Firebase to UserModel
-  factory UserModel.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> document) {
-    final Map<String, dynamic>? data = document.data();
-
+  factory UserModel.fromSnapshot(Map<dynamic, dynamic> document) {
     return UserModel(
-        id: data?['id'],
-        fullname: data!['fullname'],
-        email: data['email'],
-        password: data['password'],
-        phone: data['phone']);
+        id: document['id'],
+        fullname: document['fullname'],
+        email: document['email'],
+        password: document['password'],
+        phone: document['phone']);
   }
 }

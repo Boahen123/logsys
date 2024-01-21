@@ -2,6 +2,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logsys/models/login_controller.dart';
+import 'package:logsys/services/database/database_controller.dart';
+import 'package:logsys/services/sessions/session_controller.dart';
+import 'package:logsys/utils/constants/colors.dart';
 // import 'package:logsys/utils/constants/colors.dart';
 import 'package:logsys/utils/constants/register_texts.dart';
 import 'package:logsys/views/register/widgets/register_form_widget.dart';
@@ -17,6 +20,10 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final LoginController loginController = LoginController.instance;
+  final DatabaseController dbController = DatabaseController.instance;
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -50,25 +57,43 @@ class _LoginFormState extends State<LoginForm> {
               ),
               SizedBox(
                 width: double.infinity,
+                height: size.height * 0.06,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (loginFormKey.currentState!.validate()) {
                       loginFormKey.currentState!.save();
-                      // logic for loggin in
-
                       // Get texts from input fields
                       log(' phone: ${LoginController.instance.phoneController.text}');
                       log(' password: ${LoginController.instance.passwordController.text}');
 
-                      // Clear the form fields
-                      LoginController.instance.phoneController.clear();
-                      LoginController.instance.passwordController.clear();
+                      setState(() {
+                        loading = true;
+                      });
 
-                      // Go to home screen
-                      Get.toNamed('/home');
+                      // logic for loggin in
+                      if (await dbController.checkIfPhoneExists(
+                          loginController.phoneController.text.trim())) {
+                        Get.toNamed('/home');
+                      }
+
+                      // create user session
+                      // SessionController.instance.createSession();
+
+                      setState(() {
+                        loading = false;
+                      });
+
+                      // Clear the form fields
+                      loginController.phoneController.clear();
+                      loginController.passwordController.clear();
                     }
                   },
-                  child: const Text('login'),
+                  child: loading
+                      ? CircularProgressIndicator(
+                          color: appcolor1,
+                          strokeWidth: 4.0,
+                        )
+                      : const Text('login'),
                 ),
               ),
             ],
