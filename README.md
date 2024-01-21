@@ -2,6 +2,8 @@
 
 `LogSys` is a simple login system with session management.
 
+Link to release apk: https://drive.google.com/drive/folders/1hqsUIapJUx5VX2h3dcFaIkrZ6ttOf9_L?usp=drive_link
+
 ## Application UI
 
 |                                       |                                         |
