@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logsys/models/user_model.dart';
+import 'package:logsys/services/database/database_controller.dart';
+import 'package:logsys/services/register/registration_repo.dart';
 
 /// The `SignUpController` class is responsible for managing the sign-up process, including handling
 /// user input and registering a new user.
@@ -14,19 +17,22 @@ class SignUpController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   final fullname = TextEditingController();
+  final phone = TextEditingController();
   RxString phoneNo = ''.obs;
   RxString emailString = ''.obs;
   RxString passwordString = ''.obs;
   RxString fullnameString = ''.obs;
 
-  @override
-  void onReady() {
-    super.onReady();
-    signUpController = Get.put(SignUpController());
-  }
-
   ///  `registerUser` creates a new user.
-  void registerUser(String email, String password) {}
+  void registerUser(String email, String password, String fullname,
+      String phone, String? id) async {
+    UserModel userModel = RegistrationRepo.createNewUserModel(
+        fullname, phone, email, password, id);
+
+    Map<String, dynamic> user = userModel.toJson();
+
+    await DatabaseController.instance.createUserInDb(user);
+  }
 
   String? emailValidator(String? value) {
     bool result = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
@@ -40,4 +46,8 @@ class SignUpController extends GetxController {
 
   String? fullNameValidator(String? value) =>
       value!.isEmpty ? 'Name cannot be empty' : null;
+
+  String? phoneValidator(String? value) {
+    return value!.length < 10 ? 'Please enter 10 digits.' : null;
+  }
 }

@@ -8,10 +8,14 @@ class LoginController extends GetxController {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
 
-  phoneValidator(String? value) {}
+  String? phoneValidator(String? value) {
+    return value!.length < 10 ? 'Please enter 10 digits.' : null;
+  }
 
   String? passwordValidator(String? value) {
-    return value!.length < 6 ? 'Password must be at least 6 characters' : null;
+    return (value == null || value.length < 6)
+        ? 'Password must be at least 6 characters'
+        : null;
   }
 
   /// The function initiates phone authentication and navigates to the OTP screen.
