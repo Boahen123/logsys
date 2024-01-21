@@ -101,16 +101,23 @@ class _LoginFormState extends State<LoginForm> {
                           'phone': user?.phone ?? 'Default Phone',
                           'user_id': user?.id ?? 'Default id'
                         });
+                      } else {
+                        Get.snackbar(
+                            'Phone number not found', 'Please register',
+                            backgroundColor: appcolor2);
+                        await Future.delayed(const Duration(seconds: 3), () {
+                          Get.toNamed('/register');
+                        });
                       }
-
-                      setState(() {
-                        loading = false;
-                      });
-
-                      // Clear the form fields
-                      loginController.phoneController.clear();
-                      loginController.passwordController.clear();
                     }
+
+                    setState(() {
+                      loading = false;
+                    });
+
+                    // Clear the form fields
+                    loginController.phoneController.clear();
+                    loginController.passwordController.clear();
                   },
                   child: loading
                       ? CircularProgressIndicator(
