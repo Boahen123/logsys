@@ -4,11 +4,11 @@
 
 ## Application UI
 
-<img src="assets/screens/splash.png" alt="">
-<img src="assets/screens/register.png" alt="">
-<img src="assets/screens/login.png" alt="">
-<img src="assets/screens/home.png" alt="">
-<img src="assets/screens/logout.png" alt="">
+<img src="assets/screens/splash.png" alt="" width="500px" height="500px">
+<img src="assets/screens/register.png" alt="" width="500px" height="500px">
+<img src="assets/screens/login.png" alt="" width="500px" height="500px">
+<img src="assets/screens/home.png" alt="" width="500px" height="500px">
+<img src="assets/screens/logout.png" alt="" width="500px" height="500px">
 
 ## Firebase Integration (Firestore)
 
