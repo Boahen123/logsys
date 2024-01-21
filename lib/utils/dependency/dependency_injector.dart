@@ -7,7 +7,6 @@ import 'package:logsys/services/database/database_controller.dart';
 class DependencyInjector {
   /// The function sets up dependencies for the SignUpController and LoginController.
   static setupDependencies() {
-    Get.put<SignUpController>(SignUpController());
     Get.put(LoginController());
     Get.put(DatabaseController());
   }

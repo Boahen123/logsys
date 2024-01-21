@@ -20,6 +20,7 @@ class RegisterFormWidget extends StatefulWidget {
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   /// FocusNode for the screen
   late FocusNode focusNode;
+  final SignUpController signUpController = SignUpController.instance;
 
   @override
   void initState() {
@@ -50,33 +51,33 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               CustomFormField(
                 icon: Icons.person,
                 fieldName: fullNametext,
-                controller: SignUpController.instance.fullname,
+                controller: signUpController.fullname,
                 validator: (String? value) =>
-                    SignUpController.instance.fullNameValidator(value),
+                    signUpController.fullNameValidator(value),
               ),
               SizedBox(height: size.height * 0.02),
               CustomFormField(
                 icon: Icons.phone,
                 fieldName: phoneNumbertext,
-                controller: SignUpController.instance.phone,
+                controller: signUpController.phone,
                 validator: (String? value) =>
-                    SignUpController.instance.phoneValidator(value),
+                    signUpController.phoneValidator(value),
               ),
               SizedBox(height: size.height * 0.02),
               CustomFormField(
                 icon: Icons.email,
                 fieldName: emailtext,
-                controller: SignUpController.instance.email,
+                controller: signUpController.email,
                 validator: (String? value) =>
-                    SignUpController.instance.emailValidator(value),
+                    signUpController.emailValidator(value),
               ),
               SizedBox(height: size.height * 0.02),
               CustomFormField(
                 icon: Icons.lock,
                 fieldName: passwordtext,
-                controller: SignUpController.instance.password,
+                controller: signUpController.password,
                 validator: (String? value) =>
-                    SignUpController.instance.passwordValidator(value),
+                    signUpController.passwordValidator(value),
               ),
               SizedBox(height: size.height * 0.08),
               SizedBox(
@@ -85,18 +86,25 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                   onPressed: () {
                     if (signupFormKey.currentState!.validate()) {
                       signupFormKey.currentState!.save();
+                      // register the user
+                      signUpController.registerUser(
+                          signUpController.email.text,
+                          signUpController.password.text,
+                          signUpController.fullname.text,
+                          signUpController.phone.text,
+                          null);
                       // get the texts from the form fields
-                      log('full name: ${SignUpController.instance.fullname.text}');
-                      log('phone : ${SignUpController.instance.phone.text}');
-                      log('email: ${SignUpController.instance.email.text}');
-                      log('password: ${SignUpController.instance.password.text}');
+                      log('full name: ${signUpController.fullname.text}');
+                      log('phone : ${signUpController.phone.text}');
+                      log('email: ${signUpController.email.text}');
+                      log('password: ${signUpController.password.text}');
                       Get.toNamed('/login');
 
                       // Clear the form fields
-                      SignUpController.instance.email.clear();
-                      SignUpController.instance.phone.clear();
-                      SignUpController.instance.fullname.clear();
-                      SignUpController.instance.password.clear();
+                      signUpController.email.clear();
+                      signUpController.phone.clear();
+                      signUpController.fullname.clear();
+                      signUpController.password.clear();
                       // authentication with phone and password
                     }
                   },
