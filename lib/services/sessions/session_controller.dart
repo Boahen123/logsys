@@ -19,8 +19,6 @@ class SessionController extends GetxController {
 
       if (counterDoc.exists) {
         var currentCount = counterDoc.data()!['count'];
-
-        // log(currentCount.toString());
         // Update the counter in the document
         await counterRef.update({'count': currentCount + 1});
 
@@ -53,6 +51,7 @@ class SessionController extends GetxController {
     await SessionController.instance.createSessioninDb(session);
   }
 
+  /// generate JWT token
   String generateAuthToken(int? userId) {
     // / Generate a JSON Web Token
 // You can provide the payload as a key-value map or a string

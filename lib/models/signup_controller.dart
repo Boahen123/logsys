@@ -34,19 +34,23 @@ class SignUpController extends GetxController {
     await DatabaseController.instance.createUserInDb(user);
   }
 
+  /// Validate email
   String? emailValidator(String? value) {
     bool result = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
         .hasMatch(value!);
     return result ? null : 'Please enter a valid email';
   }
 
+  /// Validate password
   String? passwordValidator(String? value) {
     return value!.length < 6 ? 'Password must be at least 6 characters' : null;
   }
 
+  /// Validate name
   String? fullNameValidator(String? value) =>
       value!.isEmpty ? 'Name cannot be empty' : null;
 
+  /// Validate phone number
   String? phoneValidator(String? value) {
     return value!.length < 10 ? 'Please enter 10 digits.' : null;
   }

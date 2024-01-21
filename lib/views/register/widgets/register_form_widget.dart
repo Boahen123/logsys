@@ -21,22 +21,8 @@ class RegisterFormWidget extends StatefulWidget {
 }
 
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
-  /// FocusNode for the screen
-  late FocusNode focusNode;
   final SignUpController signUpController = SignUpController.instance;
   bool showPassword = true;
-
-  @override
-  void initState() {
-    super.initState();
-    // FocusNode focusNode = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    // focusNode.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

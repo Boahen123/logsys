@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logsys/utils/constants/colors.dart';
 
-/// The `FormFooterWidget` class displays a form footer with options for
-/// alternative authentication methods.
+/// The `FormFooterWidget` displays an alternative flow to the homepage
 class FormFooterWidget extends StatelessWidget {
   const FormFooterWidget({
     required this.alt,

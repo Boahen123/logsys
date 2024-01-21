@@ -11,12 +11,7 @@ class SessionModel {
     required this.expiryTime,
   });
 
-  /// Converts a UserModel object's properties into a JSON format.
-  ///
-  /// Returns:
-  ///   A Map object is being returned. The keys of the map are 'fullname', 'email', 'password', and
-  /// 'phone', and the corresponding values are the values of the variables fullname, email, password, and
-  /// phone.
+  /// Converts a SessionModel object's properties into a JSON format.
   Map<String, dynamic> toJson() {
     return {
       'id': id,

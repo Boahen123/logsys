@@ -13,6 +13,4 @@ class RegistrationRepo {
         phone: phone,
         email: email);
   }
-
-  ///  `saveUser` saves a new user to the database.
 }
