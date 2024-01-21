@@ -37,9 +37,17 @@ class SessionController extends GetxController {
 
   ///  `createSession` creates a session.
   void createSession(
-      int? userId, String authToken, DateTime expiration, int? id) async {
-    SessionModel sessionModel =
-        SessionRepo.createNewSessionModel(userId, authToken, expiration, id);
+    int? id,
+    int? userId,
+    String authToken,
+    DateTime expiration,
+  ) async {
+    SessionModel sessionModel = SessionRepo.createNewSessionModel(
+      id,
+      userId,
+      authToken,
+      expiration,
+    );
     Map<String, dynamic> session = sessionModel.toJson();
 
     await SessionController.instance.createSessioninDb(session);
@@ -53,8 +61,9 @@ class SessionController extends GetxController {
       {
         'id': userId,
         'exp': DateTime.now()
-            .add(const Duration(minutes: 5))
-            .millisecondsSinceEpoch,
+                .add(const Duration(minutes: 5))
+                .millisecondsSinceEpoch ~/
+            1000,
         'server': {
           'id': '3e4fc296',
           'loc': 'euw-2',
@@ -68,5 +77,24 @@ class SessionController extends GetxController {
 
     log('Signed token: $token\n');
     return token;
+  }
+
+  /// remove session document from firestore
+  Future<void> removeSessionFromDb(int? userId) async {
+    try {
+      // Specify the collection
+      CollectionReference sessions = db.collection('sessions');
+      // Query Firestore for documents with 'phone' field equal to the given value
+      QuerySnapshot querySnapshot =
+          await sessions.where('user_id', isEqualTo: userId).get();
+      log('Found a match: ${querySnapshot.docs.first.toString()}');
+      for (var docSnapshot in querySnapshot.docs) {
+        await docSnapshot.reference.delete();
+      }
+
+      log('sucessfully all deleted sessions');
+    } catch (e) {
+      log('Error(removeSessionFromDb): ${e.toString()}');
+    }
   }
 }

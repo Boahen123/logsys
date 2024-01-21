@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logsys/models/session_model.dart';
-import 'package:logsys/services/login/session_repo.dart';
-import 'package:logsys/services/sessions/session_controller.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
@@ -23,15 +20,4 @@ class LoginController extends GetxController {
 
   /// The function initiates phone authentication and navigates to the OTP screen.
   void phoneAuthentication(String phoneNo) {}
-
-  ///  `createNewSession` creates a user session.
-  void createNewSession(int? userId, String authToken, DateTime expiration,
-      String password, int? id) async {
-    SessionModel session =
-        SessionRepo.createNewSessionModel(userId, authToken, expiration, id);
-
-    Map<String, dynamic> sessionModel = session.toJson();
-
-    await SessionController.instance.createSessioninDb(sessionModel);
-  }
 }

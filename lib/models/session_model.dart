@@ -1,13 +1,13 @@
 class SessionModel {
   final int? id;
   final int? userId;
-  final String authToken;
+  final String? authToken;
   final DateTime expiryTime;
 
   const SessionModel({
     this.id,
     this.userId,
-    required this.authToken,
+    this.authToken,
     required this.expiryTime,
   });
 

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:logsys/models/login_controller.dart';
 import 'package:logsys/models/user_model.dart';
 import 'package:logsys/services/database/database_controller.dart';
+import 'package:logsys/services/database/token_manager.dart';
 import 'package:logsys/services/sessions/session_controller.dart';
 import 'package:logsys/utils/constants/colors.dart';
 import 'package:logsys/utils/constants/register_texts.dart';
@@ -69,27 +70,38 @@ class _LoginFormState extends State<LoginForm> {
                       setState(() {
                         loading = true;
                       });
-
-                      // logic for loggin in
-                      if (await dbController.checkIfPhoneExists(
-                          loginController.phoneController.text.trim())) {
-                        Get.toNamed('/home');
-                      }
-
                       // retrieve the user data to expose userId
                       UserModel? user = await DatabaseController.instance
                           .retrieveUserData(
                               loginController.phoneController.text.trim());
 
+                      log('${user?.fullname}');
+                      log('${user?.phone}');
+
                       // generate auth token
                       String authToken = SessionController.instance
                           .generateAuthToken(user?.id);
+
+                      // store the token locally
+                      TokenManager.storeToken(authToken);
+
                       // create user session
                       SessionController.instance.createSession(
-                          user?.id,
-                          authToken,
-                          DateTime.now().add(const Duration(minutes: 5)),
-                          null);
+                        null,
+                        user?.id,
+                        authToken,
+                        DateTime.now().add(const Duration(minutes: 5)),
+                      );
+
+                      // logic for loggin in
+                      if (await dbController.checkIfPhoneExists(
+                          loginController.phoneController.text.trim())) {
+                        Get.toNamed('/home', arguments: {
+                          'fullname': user?.fullname ?? 'Default Fullname',
+                          'phone': user?.phone ?? 'Default Phone',
+                          'user_id': user?.id ?? 'Default id'
+                        });
+                      }
 
                       setState(() {
                         loading = false;
