@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 // import 'package:get/get.dart';
 import 'package:logsys/services/database/phoneauth_controller.dart';
 import 'package:logsys/utils/constants/colors.dart';
@@ -68,10 +69,6 @@ class VerificationScreen1State extends State<VerificationScreen1> {
               controls = controllers;
             },
             onSubmit: (String verificationCode) {
-              //set clear text to clear text from all fields
-              setState(() {
-                clearText = true;
-              });
               AuthController.instance.smsCode.value = verificationCode;
               log('smsCode: ${AuthController.instance.smsCode.value}');
               //navigate to different screen code goes here
@@ -103,13 +100,14 @@ class VerificationScreen1State extends State<VerificationScreen1> {
                 setState(() {
                   loading = true;
                 });
+                Get.back(result: AuthController.instance.smsCode.value);
               },
               child: loading
                   ? const CircularProgressIndicator(
                       color: Colors.white,
                     )
                   : Text(
-                      'Sign Up',
+                      'Confirm',
                       style: TextStyle(color: appcolor3),
                     ),
             ),

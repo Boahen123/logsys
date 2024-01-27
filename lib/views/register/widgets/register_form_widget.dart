@@ -30,6 +30,7 @@ class RegisterFormWidget extends StatefulWidget {
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   final SignUpController signUpController = SignUpController.instance;
   bool showPassword = true;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +120,12 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                     if (signupFormKey.currentState!.validate()) {
                       signupFormKey.currentState!.save();
 
+                      log(phoneNo);
+
+                      setState(() {
+                        loading = true;
+                      });
+
                       // encrypt the password
                       // String encryptedPassword =
                       //     LoginController.instance.encryptPassword(
@@ -126,36 +133,48 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                       // );
                       // log('Encrypted password: $encryptedPassword');
 
-                      if (await DatabaseController.instance.checkIfPhoneExists(
-                        phoneNo,
-                      )) {
+                      bool phoneNoExists = await DatabaseController.instance
+                          .checkIfPhoneExists(phoneNo);
+                      log('Phone number exists? $phoneNoExists');
+                      if (phoneNoExists) {
                         customSnackbar(
                             'Try again', 'This phone number is taken!');
+                        setState(() {
+                          loading = false;
+                        });
                       } else {
                         await AuthController.instance.verifyPhone(phoneNo);
 
                         // register the user
-                        // signUpController.registerUser(
-                        //     signUpController.email.text,
-                        //     signUpController.fullname.text,
-                        //     phoneNo,
-                        //     null);
-
-                        // Clear the form fields
-                        signUpController.email.clear();
-                        signUpController.fullname.clear();
+                        signUpController.registerUser(
+                            signUpController.email.text,
+                            signUpController.fullname.text,
+                            phoneNo,
+                            null);
 
                         // get the texts from the form fields
                         log('full name: ${signUpController.fullname.text}');
                         log('phone : $phoneNo');
                         log('email: ${signUpController.email.text}');
+
+                        // Clear the form fields
+                        signUpController.email.clear();
+                        signUpController.fullname.clear();
+
+                        setState(() {
+                          loading = false;
+                        });
                       }
                     }
                   },
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(color: appcolor3),
-                  ),
+                  child: loading
+                      ? CircularProgressIndicator(
+                          color: appcolor3,
+                        )
+                      : Text(
+                          'Sign Up',
+                          style: TextStyle(color: appcolor3),
+                        ),
                 ),
               ),
             ],
