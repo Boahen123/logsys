@@ -24,10 +24,10 @@ class SignUpController extends GetxController {
   RxString fullnameString = ''.obs;
 
   ///  `registerUser` creates a new user.
-  void registerUser(String email, String password, String fullname,
-      String phone, int? id) async {
-    UserModel userModel = RegistrationRepo.createNewUserModel(
-        fullname, phone, email, password, id);
+  void registerUser(
+      String email, String fullname, String phone, int? id) async {
+    UserModel userModel =
+        RegistrationRepo.createNewUserModel(fullname, phone, email, id);
 
     Map<String, dynamic> user = userModel.toJson();
 

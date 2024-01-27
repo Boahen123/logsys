@@ -1,13 +1,20 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:logsys/models/login_controller.dart';
+// import 'package:get/get.dart';
+// import 'package:get/get.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+// import 'package:logsys/models/login_controller.dart';
 import 'package:logsys/models/signup_controller.dart';
 import 'package:logsys/services/database/database_controller.dart';
+import 'package:logsys/services/database/phoneauth_controller.dart';
+// import 'package:logsys/services/database/database_controller.dart';
+// import 'package:logsys/services/database/database_controller.dart';
 import 'package:logsys/utils/constants/colors.dart';
 import 'package:logsys/utils/constants/register_texts.dart';
 import 'package:logsys/views/common_widgets/snackbar.dart';
+// import 'package:logsys/views/common_widgets/snackbar.dart';
+// import 'package:logsys/views/common_widgets/snackbar.dart';
 
 /// The `SignUpFormWidget` class displays a form for signing up with fields
 /// for full name, email, phone number, and password.
@@ -29,6 +36,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     final GlobalKey<FormState> signupFormKey =
         GlobalKey<FormState>(debugLabel: 'signupFormKey');
     final Size size = MediaQuery.of(context).size;
+    String phoneNo = "";
 
     return Form(
         key: signupFormKey,
@@ -46,13 +54,23 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                     signUpController.fullNameValidator(value),
               ),
               SizedBox(height: size.height * 0.02),
-              CustomFormField(
-                keyboardType: TextInputType.phone,
-                icon: Icons.phone,
-                fieldName: phoneNumbertext,
-                controller: signUpController.phone,
-                validator: (String? value) =>
-                    signUpController.phoneValidator(value),
+              IntlPhoneField(
+                decoration: InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 3.0),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size.width * 0.05)),
+                      gapPadding: 2.0),
+                  fillColor: appcolor2,
+                  focusColor: appcolor1,
+                  filled: true,
+                ),
+                initialCountryCode: 'GH',
+                onChanged: (phone) {
+                  phoneNo = phone.completeNumber;
+                  log(phoneNo);
+                },
               ),
               SizedBox(height: size.height * 0.02),
               CustomFormField(
@@ -63,35 +81,35 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                     signUpController.emailValidator(value),
               ),
               SizedBox(height: size.height * 0.02),
-              TextFormField(
-                obscureText: showPassword,
-                keyboardType: TextInputType.phone,
-                controller: LoginController.instance.passwordController,
-                validator: (String? value) =>
-                    LoginController.instance.passwordValidator(value),
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    icon: showPassword
-                        ? const Icon(Icons.visibility)
-                        : const Icon(Icons.visibility_off),
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                  ),
-                  prefixIcon: const Icon(Icons.lock),
-                  label: const Text(passwordtext),
-                  border: OutlineInputBorder(
-                      borderSide: const BorderSide(width: 3.0),
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(size.width * 0.05)),
-                      gapPadding: 2.0),
-                  fillColor: appcolor2,
-                  focusColor: appcolor1,
-                  filled: true,
-                ),
-              ),
+              // TextFormField(
+              //   obscureText: showPassword,
+              //   keyboardType: TextInputType.phone,
+              //   controller: LoginController.instance.passwordController,
+              //   validator: (String? value) =>
+              //       LoginController.instance.passwordValidator(value),
+              //   decoration: InputDecoration(
+              //     suffixIcon: IconButton(
+              //       icon: showPassword
+              //           ? const Icon(Icons.visibility)
+              //           : const Icon(Icons.visibility_off),
+              //       onPressed: () {
+              //         setState(() {
+              //           showPassword = !showPassword;
+              //         });
+              //       },
+              //     ),
+              //     prefixIcon: const Icon(Icons.lock),
+              //     label: const Text(passwordtext),
+              //     border: OutlineInputBorder(
+              //         borderSide: const BorderSide(width: 3.0),
+              //         borderRadius:
+              //             BorderRadius.all(Radius.circular(size.width * 0.05)),
+              //         gapPadding: 2.0),
+              //     fillColor: appcolor2,
+              //     focusColor: appcolor1,
+              //     filled: true,
+              //   ),
+              // ),
               SizedBox(height: size.height * 0.08),
               SizedBox(
                 width: double.infinity,
@@ -102,37 +120,36 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                       signupFormKey.currentState!.save();
 
                       // encrypt the password
-                      String encryptedPassword =
-                          LoginController.instance.encryptPassword(
-                        signUpController.password.text,
-                      );
-                      log('Encrypted password: $encryptedPassword');
+                      // String encryptedPassword =
+                      //     LoginController.instance.encryptPassword(
+                      //   signUpController.password.text,
+                      // );
+                      // log('Encrypted password: $encryptedPassword');
 
                       if (await DatabaseController.instance.checkIfPhoneExists(
-                        signUpController.phone.text.trim(),
+                        phoneNo,
                       )) {
                         customSnackbar(
                             'Try again', 'This phone number is taken!');
                       } else {
+                        await AuthController.instance.verifyPhone(phoneNo);
+
                         // register the user
-                        signUpController.registerUser(
-                            signUpController.email.text,
-                            encryptedPassword,
-                            signUpController.fullname.text,
-                            signUpController.phone.text,
-                            null);
+                        // signUpController.registerUser(
+                        //     signUpController.email.text,
+                        //     signUpController.fullname.text,
+                        //     phoneNo,
+                        //     null);
+
                         // Clear the form fields
                         signUpController.email.clear();
-                        signUpController.phone.clear();
                         signUpController.fullname.clear();
-                        signUpController.password.clear();
-                        Get.toNamed('/login');
+
+                        // get the texts from the form fields
+                        log('full name: ${signUpController.fullname.text}');
+                        log('phone : $phoneNo');
+                        log('email: ${signUpController.email.text}');
                       }
-                      // get the texts from the form fields
-                      log('full name: ${signUpController.fullname.text}');
-                      log('phone : ${signUpController.phone.text}');
-                      log('email: ${signUpController.email.text}');
-                      log('password: ${signUpController.password.text}');
                     }
                   },
                   child: Text(

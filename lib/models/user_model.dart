@@ -5,13 +5,11 @@ class UserModel {
   final String fullname;
   final String email;
   final String? phone;
-  final String? password;
 
   const UserModel({
     this.id,
     required this.fullname,
     required this.email,
-    this.password,
     this.phone,
   });
 
@@ -26,7 +24,6 @@ class UserModel {
       'id': id,
       'fullname': fullname,
       'email': email,
-      'password': password,
       'phone': phone,
     };
   }
@@ -37,7 +34,6 @@ class UserModel {
         id: document['id'],
         fullname: document['fullname'],
         email: document['email'],
-        password: document['password'],
         phone: document['phone']);
   }
 }
