@@ -1,7 +1,7 @@
 // Strings for various texts on the `RegisterScreen` and perhaps on other screens in the app
 
 /// `Welcome! Register` header text
-const String registerText = 'Welcome! Register';
+const String registerText = 'Create an Account';
 
 /// `Full name` text
 const String fullNametext = 'Full name';
